@@ -2,14 +2,20 @@ package com.codewithmosh.iterator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 public class BrowseHistory {
 
-    private List<String> urls = new ArrayList<>();
+    private String[] urls = new String[10];
+    private int count = 0;
 
     public void push(String url) {
-        urls.add(url);
+        if(count < 10){
+            urls[count] = url;
+            count++;
+        }else{
+            System.out.println("El historial esta lleno");
+        }
+        
     }
 
     public Iterator<String> createIterator(){
@@ -17,15 +23,20 @@ public class BrowseHistory {
     }
 
     public void pop(){
-        var lastIndex = urls.size() - 1;
-        urls.remove(lastIndex);
+
+        if(count > 0){
+            urls[count] = null;
+            count--;
+        }else{
+            System.out.println("El historial esta vacio");
+        }
     }
 
     public class ListIterator implements Iterator<String>{
 
 
         private BrowseHistory history;
-        private int index;
+        private int index = 0 ;
 
         public ListIterator(BrowseHistory history) {
             this.history = history;
@@ -33,12 +44,12 @@ public class BrowseHistory {
 
         @Override
         public boolean hasNext() {
-            return (index < history.urls.size());
+            return (index < history.count);
         }
 
         @Override
         public String current() {
-            return history.urls.get(index);
+            return history.urls[index];
         }
 
         @Override
