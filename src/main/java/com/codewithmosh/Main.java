@@ -1,5 +1,8 @@
 package com.codewithmosh;
 
+import com.codewithmosh.command.Button;
+import com.codewithmosh.command.fx.AddCustomerCommand;
+import com.codewithmosh.command.fx.CustomerService;
 import com.codewithmosh.strategy.HighContrastFilter;
 import com.codewithmosh.strategy.ImageStore;
 import com.codewithmosh.strategy.JpegCompressor;
@@ -9,7 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-       var task = new TransferMoneyTask();
-        task.execute();
+       var service = new CustomerService();
+       var command = new AddCustomerCommand(service);
+       var button = new Button(command);
+       button.click();
     }
 }
